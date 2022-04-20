@@ -42,6 +42,7 @@ function App() {
               ''
             )
             const blockHash = utils.serialize.base_decode(blockInfo.block_hash)
+            // @ts-expect-error
             const action = transactions.transfer(utils.format.parseNearAmount('0.0001'))
 
             const tx = transactions.createTransaction(
@@ -59,6 +60,56 @@ function App() {
           }}
         >
           Send test 0.0001 Near
+        </Button>
+        <Button
+          variant='contained'
+          style={{ margin: 10 }}
+          onClick={async () => {
+            if (!nearAccount) return
+            const provider = new JsonRpcProvider({ url: 'https://rpc.testnet.near.org' })
+            const blockInfo = await provider.query(
+              `access_key/${nearAccount.accountId}/${
+                nearAccount.publicKey.toString().split(':')[1]
+              }`,
+              ''
+            )
+            const blockHash = utils.serialize.base_decode(blockInfo.block_hash)
+            // @ts-expect-error
+            const action = transactions.transfer(utils.format.parseNearAmount('0.0001'))
+
+            const tx = transactions.createTransaction(
+              nearAccount.accountId,
+              nearAccount.publicKey,
+              'norbert.testnet',
+              // @ts-expect-error
+              ++blockInfo.nonce,
+              [action],
+              blockHash
+            )
+            const actionTokenSend = transactions.functionCall(
+              'ft_transfer',
+              { amount: '11111', memo: '', receiver_id: 'norbert.testnet' },
+              // @ts-expect-error
+              30000000000000, // attached gas
+              '1'
+            )
+            const tx2 = transactions.createTransaction(
+              nearAccount.accountId,
+              nearAccount.publicKey,
+              'banana.ft-fin.teset',
+              // @ts-expect-error
+              blockInfo.nonce + 2,
+              [actionTokenSend],
+              blockHash
+            )
+            const signedTxs = await NightlyNear.signAllTransactions([tx, tx2])
+            for (const signedTx of signedTxs) {
+              const id = (await provider.sendTransactionAsync(signedTx)) as unknown as string
+              console.log(id)
+            }
+          }}
+        >
+          sign all 0.0001 Near
         </Button>
         <Button
           variant='contained'

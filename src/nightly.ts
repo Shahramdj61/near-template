@@ -1,7 +1,7 @@
 import { NearAccount, NearNightly, WalletAdapter } from './types'
 import {
   SignedTransaction as NearSignedTransaction,
-  Transaction as NearTransaction,
+  Transaction as NearTransaction
 } from 'near-api-js/lib/transaction'
 import { PublicKey } from 'near-api-js/lib/utils'
 
@@ -37,13 +37,17 @@ export class NightlyWalletAdapter implements WalletAdapter {
     return await this._provider.signTransaction(transaction)
   }
 
+  async signMessage(msg: string) {
+    return await this._provider.signMessage(msg)
+  }
+
   async connect(onDisconnect?: () => void) {
     try {
       const acc = await this._provider.connect(onDisconnect)
       this.account = {
         accountId: acc.accountId,
         // There might be problem with the public key thats why we parse it to local version
-        publicKey: PublicKey.from(acc.publicKey.toString()),
+        publicKey: PublicKey.from(acc.publicKey.toString())
       }
       this._connected = true
       return this.account

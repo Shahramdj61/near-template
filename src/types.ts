@@ -1,6 +1,6 @@
 import {
   SignedTransaction as NearSignedTransaction,
-  Transaction as NearTransaction,
+  Transaction as NearTransaction
 } from 'near-api-js/lib/transaction'
 import { PublicKey as NearPublicKey } from 'near-api-js/lib/utils'
 export interface NearAccount {
@@ -32,4 +32,5 @@ export declare class NearNightly {
   disconnect(): Promise<void>
   signTransaction: (transaction: NearTransaction) => Promise<NearSignedTransaction>
   signAllTransactions: (transaction: NearTransaction[]) => Promise<NearSignedTransaction[]>
+  signMessage: (msg: string) => Promise<string>
 }

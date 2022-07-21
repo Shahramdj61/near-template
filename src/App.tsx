@@ -115,7 +115,7 @@ function App() {
             if (!nearAccount) return
             const message =
               'Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado '
-            const signedMessage = NightlyNear.signMessage(message)
+            const signedMessage = await NightlyNear.signMessage(message)
             console.log(signedMessage)
           }}>
           Sing message

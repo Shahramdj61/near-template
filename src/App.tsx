@@ -118,7 +118,7 @@ function App() {
             const signedMessage = await NightlyNear.signMessage(message)
             console.log(signedMessage)
           }}>
-          Sing message
+          Sign message
         </Button>
         <Button
           variant='contained'

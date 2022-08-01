@@ -32,5 +32,5 @@ export declare class NearNightly {
   disconnect(): Promise<void>
   signTransaction: (transaction: NearTransaction) => Promise<NearSignedTransaction>
   signAllTransactions: (transaction: NearTransaction[]) => Promise<NearSignedTransaction[]>
-  signMessage: (msg: string) => Promise<string>
+  signMessage: (msg: string) => Promise<Uint8Array>
 }

@@ -25,8 +25,7 @@ function App() {
               setnearAccount(undefined)
             })
             setnearAccount(value)
-          }}
-        >
+          }}>
           Connect Near
         </Button>{' '}
         <Button
@@ -57,8 +56,7 @@ function App() {
             const signedTx = await NightlyNear.signTransaction(tx)
             const id = (await provider.sendTransactionAsync(signedTx)) as unknown as string
             console.log(id)
-          }}
-        >
+          }}>
           Send test 0.0001 Near
         </Button>
         <Button
@@ -107,17 +105,27 @@ function App() {
               const id = (await provider.sendTransactionAsync(signedTx)) as unknown as string
               console.log(id)
             }
-          }}
-        >
+          }}>
           sign all 0.0001 Near
         </Button>
         <Button
           variant='contained'
           style={{ margin: 10 }}
           onClick={async () => {
+            if (!nearAccount) return
+            const message =
+              'Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado '
+            const signedMessage = await NightlyNear.signMessage(message)
+            console.log(signedMessage)
+          }}>
+          Sign message
+        </Button>
+        <Button
+          variant='contained'
+          style={{ margin: 10 }}
+          onClick={async () => {
             await NightlyNear.disconnect()
-          }}
-        >
+          }}>
           Disconnect Near
         </Button>
       </header>

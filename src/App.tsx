@@ -6,6 +6,8 @@ import { useState } from 'react'
 import './App.css'
 import { NightlyWalletAdapter } from './nightly'
 import { NearAccount } from './types'
+import docs from './docs.png'
+
 const NightlyNear = new NightlyWalletAdapter()
 function App() {
   const [nearAccount, setnearAccount] = useState<NearAccount | undefined>(undefined)
@@ -13,6 +15,17 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
+        <div>
+          <Button
+            variant='contained'
+            onClick={() => {
+              window.open('https://docs.nightly.app/docs/near/near/detecting')
+            }}
+            style={{ background: '#2680d9', color: '#000000', marginBottom: '64px' }}>
+            <img src={docs} style={{ width: '40px', height: '40px', paddingRight: '16px' }} />
+            Open documentation
+          </Button>
+        </div>
         <Typography>
           {nearAccount ? `Hello, ${nearAccount?.accountId}` : 'Hello, stranger'}
         </Typography>

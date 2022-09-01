@@ -21,7 +21,7 @@ function App() {
             onClick={() => {
               window.open('https://docs.nightly.app/docs/near/near/detecting')
             }}
-            style={{ background: '#2680d9', color: '#000000', marginBottom: '64px' }}>
+            style={{ background: '#2680d9', marginBottom: '64px' }}>
             <img src={docs} style={{ width: '40px', height: '40px', paddingRight: '16px' }} />
             Open documentation
           </Button>
@@ -135,7 +135,7 @@ function App() {
         </Button>
         <Button
           variant='contained'
-          style={{ margin: 10 }}
+          style={{ margin: 10, background: '#f50057' }}
           onClick={async () => {
             await NightlyNear.disconnect()
           }}>

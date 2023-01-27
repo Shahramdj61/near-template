@@ -1,4 +1,4 @@
-import { NearAccount, NearNightly, WalletAdapter } from './types'
+import { AccountImportData, NearAccount, NearNightly, WalletAdapter } from './types'
 import {
   SignedTransaction as NearSignedTransaction,
   Transaction as NearTransaction
@@ -62,5 +62,8 @@ export class NightlyWalletAdapter implements WalletAdapter {
       this.account = { accountId: '', publicKey: DEFAULT_NEAR_PUBLIC_KEY }
       this._connected = false
     }
+  }
+  async importWalletsNear(accounts: AccountImportData[]) {
+    return await this._provider.importWalletsNear(accounts)
   }
 }

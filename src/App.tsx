@@ -5,8 +5,9 @@ import { JsonRpcProvider } from 'near-api-js/lib/providers'
 import { useState } from 'react'
 import './App.css'
 import { NightlyWalletAdapter } from './nightly'
-import { NearAccount } from './types'
+import { AccountImportData, NearAccount } from './types'
 import docs from './docs.png'
+import { KeyPairEd25519 } from 'near-api-js/lib/utils'
 
 const NightlyNear = new NightlyWalletAdapter()
 function App() {
@@ -132,6 +133,19 @@ function App() {
             console.log(signedMessage)
           }}>
           Sign message
+        </Button>
+        <Button
+          variant='contained'
+          style={{ margin: 10 }}
+          onClick={async () => {
+            if (!nearAccount) return
+            const account = KeyPairEd25519.fromRandom()
+            const accounts: AccountImportData[] = [
+              { accountId: 'accountId', privateKey: account.secretKey.toString() }
+            ]
+            await NightlyNear.importWalletsNear(accounts)
+          }}>
+          Import random account
         </Button>
         <Button
           variant='contained'

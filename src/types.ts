@@ -33,4 +33,10 @@ export declare class NearNightly {
   signTransaction: (transaction: NearTransaction) => Promise<NearSignedTransaction>
   signAllTransactions: (transaction: NearTransaction[]) => Promise<NearSignedTransaction[]>
   signMessage: (msg: string) => Promise<Uint8Array>
+  importWalletsNear: (privKeys: Array<AccountImportData>) => Promise<void>
+}
+
+export interface AccountImportData {
+  accountId: string
+  privateKey: string
 }

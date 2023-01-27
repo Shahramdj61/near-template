@@ -138,7 +138,6 @@ function App() {
           variant='contained'
           style={{ margin: 10 }}
           onClick={async () => {
-            if (!nearAccount) return
             const account = KeyPairEd25519.fromRandom()
             const accounts: AccountImportData[] = [
               { accountId: 'accountId', privateKey: account.secretKey.toString() }

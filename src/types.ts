@@ -1,3 +1,4 @@
+import { SignMessageParams, SignedMessage } from '@near-wallet-selector/core'
 import {
   SignedTransaction as NearSignedTransaction,
   Transaction as NearTransaction
@@ -32,7 +33,7 @@ export declare class NearNightly {
   disconnect(): Promise<void>
   signTransaction: (transaction: NearTransaction) => Promise<NearSignedTransaction>
   signAllTransactions: (transaction: NearTransaction[]) => Promise<NearSignedTransaction[]>
-  signMessage: (msg: string) => Promise<Uint8Array>
+  signMessage: (msg: SignMessageParams) => Promise<SignedMessage>
   importWalletsNear: (privKeys: Array<AccountImportData>) => Promise<void>
 }
 

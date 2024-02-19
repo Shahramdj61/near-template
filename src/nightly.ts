@@ -1,3 +1,4 @@
+import { SignMessageParams } from '@near-wallet-selector/core'
 import { AccountImportData, NearAccount, NearNightly, WalletAdapter } from './types'
 import {
   SignedTransaction as NearSignedTransaction,
@@ -36,7 +37,7 @@ export class NightlyWalletAdapter implements WalletAdapter {
   async signTransaction(transaction: NearTransaction) {
     return await this._provider.signTransaction(transaction)
   }
-  async signMessage(msg: string) {
+  async signMessage(msg: SignMessageParams) {
     return await this._provider.signMessage(msg)
   }
 

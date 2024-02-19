@@ -2,17 +2,26 @@ import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import { transactions, utils } from 'near-api-js'
 import { JsonRpcProvider } from 'near-api-js/lib/providers'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { NightlyWalletAdapter } from './nightly'
 import { AccountImportData, NearAccount } from './types'
 import docs from './docs.png'
 import { KeyPairEd25519 } from 'near-api-js/lib/utils'
+import { setupWalletSelector, WalletSelector } from '@near-wallet-selector/core'
+import { setupNightly } from '@near-wallet-selector/nightly'
+import { setupModal } from '@near-wallet-selector/modal-ui'
+import { randomBytes } from 'crypto'
 
 const NightlyNear = new NightlyWalletAdapter()
-function App() {
+const selector = await setupWalletSelector({
+  network: 'testnet',
+  modules: [setupNightly()]
+})
+
+const App = () => {
   const [nearAccount, setnearAccount] = useState<NearAccount | undefined>(undefined)
-  console.log(nearAccount?.publicKey.toString())
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -127,9 +136,11 @@ function App() {
           style={{ margin: 10 }}
           onClick={async () => {
             if (!nearAccount) return
-            const message =
-              'Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado Avocado '
-            const signedMessage = await NightlyNear.signMessage(message)
+            const signedMessage = await NightlyNear.signMessage({
+              message: 'hello world <3',
+              recipient: 'norbert.testnet',
+              nonce: randomBytes(32)
+            })
             console.log(signedMessage)
           }}>
           Sign message
@@ -153,6 +164,31 @@ function App() {
             await NightlyNear.disconnect()
           }}>
           Disconnect Near
+        </Button>
+        <Button
+          variant='contained'
+          style={{ margin: 10 }}
+          onClick={async () => {
+            const nightlyWallet = await selector.wallet('nightly')
+
+            const connect = await nightlyWallet.signIn({
+              contractId: 'guest-book.testnet',
+              accounts: []
+            })
+
+            const signedMessage = await nightlyWallet.signMessage({
+              message: 'hello world',
+              recipient: 'norbert.testnet',
+              nonce: new Buffer('1')
+            })
+
+            console.log(signedMessage)
+            // const modal = setupModal(selector, {
+            //   contractId: 'guest-book.testnet'
+            // })
+            // modal.show()
+          }}>
+          Connect wallet selector
         </Button>
       </header>
     </div>
